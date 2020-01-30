@@ -64,7 +64,7 @@ class Board(object):
                     print('Either row or col is not an integer')
                     continue
                 """
-                
+
 
                 #Turn the ship orientation into a boolean value, makes it easier to code later
                 def ship_orientation_bool(orientation_lingo: str) -> bool:
@@ -74,7 +74,7 @@ class Board(object):
                         return False
 
                 #call the ship_orientation bool object
-                s = ship_orientation_bool(ship_or_input)
+                #s = ship_orientation_bool(ship_or_input)
 
                 #CellChange = Cell(self.num_rows, self.num_cols)
                 #CellChange = CellChange.cell_update_move('hit')
