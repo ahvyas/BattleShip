@@ -38,15 +38,18 @@ class Board(object):
 
         for ship, ship_size in self.ship_info.items():
             #ship inputs
-            """while True:
+            while True:
                 try:
                     ship_or_input = str(input('Please enter orientation for ship ' + ship + ': '))
                     if ship_or_input.lower() not in valid_orientation_hori and ship_or_input.lower() \
                                                                         not in valid_orientation_vert:
                         print(ship_or_input + ' does not represent an Orientation')
                         continue
+                    else:
+                        break
                 except:
                     print(ship_or_input + ' does not represent an Orientation')
+            while True:
                 try:
                     ship_coord_input = str(input('Please enter the row, column for ship ' + ship + ': '))
                     ship_row_input, ship_col_input = ship_coord_input.split(',')
@@ -60,11 +63,15 @@ class Board(object):
                         print('Column: {} is not a valid value for column.\n It should be an integer between 0 '
                               'and {}'.format(ship_col_input, self.num_cols - 1))
                         continue
-                except:
+
+                    else:
+                        break
+                except TypeError:
+                    print({ship_coord_input} + ' is not in the form x,y')
+                    continue
+                except ValueError:
                     print('Either row or col is not an integer')
                     continue
-                """
-
 
                 #Turn the ship orientation into a boolean value, makes it easier to code later
                 def ship_orientation_bool(orientation_lingo: str) -> bool:
@@ -82,13 +89,10 @@ class Board(object):
 
                 return
 
-
-
-
-
     def update_board(self, user_move):
         ub = UpdateBoard()
         ub.update(user_move, self.b)
+
 
 with open("configs/minor_game.txt") as config:
     size = config.readline()
