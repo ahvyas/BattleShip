@@ -1,4 +1,4 @@
-
+from Cell import Cell
 
 class UpdateBoard(object):
     def __init__(self, user_input, board):
@@ -6,4 +6,5 @@ class UpdateBoard(object):
         self.user_input = user_input
 
     def update(self):
+
         return self.board

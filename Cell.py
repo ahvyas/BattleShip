@@ -7,6 +7,12 @@ class Cell(object):
         self.hit = 'X'
         self.miss = 'O'
 
-    def firstboard_init(self, b: list) -> list:
-        b = [[self.empty for i in range(self.num_rows)] for j in range(self.num_cols)]
-        return b
+    def firstboard_init(self):
+        return self.empty
+
+    def cell_update(self, x='*'):
+        if x == 'hit':
+            return self.hit
+        if x == 'miss':
+            return self.miss
+        return self.empty

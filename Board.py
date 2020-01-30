@@ -9,16 +9,20 @@ class Board(object):
         self.num_cols = num_cols
         # initializes the board matrix
         self.b = []
+        #self.empty = '*'
+        #self.hit = 'X'
+        #self.miss = 'O'
         self.ship_info = kwargs
 
     def initialize_board(self):
         # creates 2D matrix for our game
-        cell = Cell(self.num_rows, self.num_cols)
-        cell.firstBoard_init(self.b)
-        # creates output for board
+        InitCell = Cell(self.num_rows, self.num_cols)
+        self.b = [[InitCell.firstboard_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
+
+        # creates output for and formats the board
         print(end='  ')
-        for hornum in range(self.num_rows):
-            print(str(hornum), end=" ")
+        for hor_num in range(self.num_rows):
+            print(str(hor_num), end=" ")
         print('')
         for index, num_row in enumerate(self.b):
             print(index, end=' ')
@@ -37,8 +41,8 @@ class Board(object):
             while True:
                 try:
                     ship_or_input = str(input('Please enter orientation for ship ' + ship + ': '))
-                    if ship_or_input.lower() not in valid_orientation_hori and {ship_or_input.lower not in
-                                                                            valid_orientation_vert}:
+                    if ship_or_input.lower() not in valid_orientation_hori and ship_or_input.lower() \
+                                                                        not in valid_orientation_vert:
                         print(ship_or_input + ' does not represent an Orientation')
                         continue
                 except:
@@ -48,14 +52,17 @@ class Board(object):
                     ship_row_input, ship_col_input = ship_coord_input.split(',')
                     ship_row_input = int(ship_row_input)
                     ship_col_input = int(ship_col_input)
-                except ValueError:
-                    print('row: {} is not a valid value for row.\n It should be an integer between 0 '
-                          'and {}'.format(ship_row_input, self.num_rows-1))
+                except ValueError(ship_row_input):
+                    pass
+                except ValueError(ship_col_input):
+                    pass
                 if ship_row_input not in range(self.num_rows):
-                    print('Error: Out of bounds! Try changing the row')
+                    print('row: {} is not a valid value for row.\n It should be an integer between 0 '
+                          'and {}'.format(ship_row_input, self.num_rows - 1))
                     continue
                 if ship_col_input not in range(self.num_cols):
-                    print('Error: Out of bounds! Try changing the column')
+                    print('Column: {} is not a valid value for column.\n It should be an integer between 0 '
+                          'and {}'.format(ship_col_input, self.num_cols-1))
                     continue
 
                 #Turn the ship orientation into a boolean value, makes it easier to code later
@@ -68,7 +75,9 @@ class Board(object):
                 #call the ship_orientation bool object
                 s = ship_orientation_bool(ship_or_input)
 
-
+                #CellChange = Cell(self.num_rows, self.num_cols)
+                #CellChange = CellChange.cell_update('hit')
+                #return print(CellChange)
 
                 return print(ship_row_input, ship_col_input, s)
 
