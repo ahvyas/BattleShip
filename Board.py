@@ -1,37 +1,82 @@
 from UpdateBoard import UpdateBoard
+from Cell import Cell
+
 
 class Board(object):
     def __init__(self, num_rows: int, num_cols: int, **kwargs: dict) -> None:
-        #rows and columns
+        # rows and columns
         self.num_rows = num_rows
         self.num_cols = num_cols
-        #initializes the board matrix
+        # initializes the board matrix
         self.b = []
-        #Types of states of board
-        self.empty = '*'
-        self.hit = 'X'
-        self.miss = 'O'
-        ship_l = [F'{key}, {value}' for key, value in kwargs.items()]
+        self.ship_info = kwargs
 
     def initialize_board(self):
-        #creates 2D matrix for our game
-        self.b = [[self.empty for i in range(self.num_rows)] for j in range(self.num_cols)]
-
-        #creates GUI for board
+        # creates 2D matrix for our game
+        cell = Cell(self.num_rows, self.num_cols)
+        cell.firstBoard_init(self.b)
+        # creates output for board
         print(end='  ')
         for hornum in range(self.num_rows):
             print(str(hornum), end=" ")
         print('')
-        for index, self.num_rows in enumerate(self.b):
+        for index, num_row in enumerate(self.b):
             print(index, end=' ')
-            print(*self.num_rows, end='\n')
+            print(*num_row, end='\n')
+
+        # returns the board for internal manipulation
         return self.b
 
+    def user_place_ship(self, ship_cols=None) -> None:
+        #Acceptable orientation names
+        valid_orientation_hori = ['h', 'hori', 'horiz', 'horizontal']
+        valid_orientation_vert = ['v', 'vert', 'verti', 'vertical']
 
-    def user_place_ship(self):
-        pass
+        for ship, ship_size in self.ship_info.items():
+            #ship inputs
+            while True:
+                try:
+                    ship_or_input = str(input('Please enter orientation for ship ' + ship + ': '))
+                    if ship_or_input.lower() not in valid_orientation_hori and {ship_or_input.lower not in
+                                                                            valid_orientation_vert}:
+                        print(ship_or_input + ' does not represent an Orientation')
+                        continue
+                except:
+                    print(ship_or_input + ' does not represent an Orientation')
+                try:
+                    ship_coord_input = str(input('Please enter the row, column for ship ' + ship + ': '))
+                    ship_row_input, ship_col_input = ship_coord_input.split(',')
+                    ship_row_input = int(ship_row_input)
+                    ship_col_input = int(ship_col_input)
+                except ValueError:
+                    print('row: {} is not a valid value for row.\n It should be an integer between 0 '
+                          'and {}'.format(ship_row_input, self.num_rows-1))
+                if ship_row_input not in range(self.num_rows):
+                    print('Error: Out of bounds! Try changing the row')
+                    continue
+                if ship_col_input not in range(self.num_cols):
+                    print('Error: Out of bounds! Try changing the column')
+                    continue
+
+                #Turn the ship orientation into a boolean value, makes it easier to code later
+                def ship_orientation_bool(orientation_lingo: str) -> bool:
+                    if orientation_lingo in valid_orientation_vert:
+                        return True
+                    elif orientation_lingo in valid_orientation_hori:
+                        return False
+
+                #call the ship_orientation bool object
+                s = ship_orientation_bool(ship_or_input)
 
 
-    def update_board(self):
+
+                return print(ship_row_input, ship_col_input, s)
+
+
+
+
+
+    def update_board(self, user_move):
         ub = UpdateBoard()
-        ub.update(self.b)
+        ub.update(user_move, self.b)
+
