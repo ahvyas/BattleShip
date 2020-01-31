@@ -77,8 +77,7 @@ class Board(object):
                 return False
 
         for ship_name, ship_size in self.ship_info.items():
-            #Ensures ships aren't placed on another
-            self.shiplist.append(ship_name)
+
             ship_size = int(ship_size)
             # user ship input
             while True:
@@ -154,6 +153,8 @@ class Board(object):
                 # CellChange = Cell(self.num_rows, self.num_cols)
                 # CellChange = CellChange.cell_update_move('hit')
                 # return print(CellChange)
+            # Ensures ships aren't placed on another
+            self.shiplist.append(ship_name)
             # print out updated board
             self.format_board(self.b)
         return self.format_board(self.b)
