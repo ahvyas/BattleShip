@@ -11,6 +11,7 @@ with open("configs/minor_game.txt") as config:
         ship_info[key] = val
 
 print(row, col, ship_info)
+
 b = Board(int(row), int(col), **ship_info)
 b.initialize_board()
 b.user_place_ship()
