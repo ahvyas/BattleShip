@@ -6,13 +6,30 @@ class Cell(object):
         self.empty = '*'
         self.hit = 'X'
         self.miss = 'O'
+        #check if it's been fired upon
+        self.check_occ = False
+        self.ship_name = []
 
-    def firstboard_init(self):
+    def first_board_init(self):
         return self.empty
+
+    def update_cell(self, board, row, column, ship_name, ship_size, orientation):
+        if not self.check_occ:
+            if orientation:
+                for i in range(int(ship_size)):
+                    #self.check_occ = True
+                    board[row+i][column] = ship_name[0]
+                self.ship_name.append(ship_name)
+            if not orientation:
+                for j in range(int(ship_size)):
+                    #self.check_occ = True
+                    board[row][column + j] = ship_name[0]
+                self.ship_name.append(ship_name)
+            return board
 
     def cell_update_move(self, x='*'):
+        self.check_occ = True
         if x == 'hit':
-            return self.hit
+            return self.hit, self.flag
         if x == 'miss':
-            return self.miss
-        return self.empty
+            return self.miss, self.flag
