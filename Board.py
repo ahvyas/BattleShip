@@ -10,12 +10,11 @@ class Board(object):
         self.num_cols = num_cols
         # initializes the board matrix
         self.b = []
-        self.empty = '*'
+        #self.empty = '*'
         # self.hit = 'X'
         # self.miss = 'O'
         self.ship_info = kwargs
         self.cell = Cell(self.num_rows, self.num_cols)
-
 
     def initialize_board(self):
         # creates 2D matrix for our game
@@ -41,7 +40,7 @@ class Board(object):
         s_name = []
         while not sp:
             for i in range(ship_size):
-                if board[row][col+i] != self.empty:
+                if board[row][col+i] != self.cell.first_board_init():
                     s_name.append(board[row][col+i])
             if len(s_name):
                 s_name.sort()
@@ -51,8 +50,8 @@ class Board(object):
             return True
         while sp:
             for j in range(ship_size):
-                if board[row+j][col] != self.empty:
-                    s_name = (self.shiplist, board[row+j][col])
+                if board[row+j][col] != self.cell.first_board_init():
+                    s_name.append(board[row+j][col])
                 if len(s_name):
                     s_name.sort()
                     print('Cannot place {} vertically at {}, {} because it would overlap with {}.'
