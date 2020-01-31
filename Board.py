@@ -44,7 +44,8 @@ class Board(object):
         valid_orientation_vert = ['v', 'vert', 'verti', 'vertical']
 
         # Turn the ship orientation into a boolean value, makes it easier to code later
-        #True = Horizontal, False = Vertical
+        # True = Vertical
+        # False = horizontal
         def ship_orientation_bool(orientation_lingo: str) -> bool:
             if orientation_lingo in valid_orientation_vert:
                 return True
@@ -64,6 +65,7 @@ class Board(object):
                         ship_or_input = 'vertical'
                     else:
                         raise ValueError
+                    print('{} placement for {}'.format(ship_or_input,ship_name) )
                 except ValueError:
                     print(ship_or_input + ' does not represent an Orientation')
                     continue
@@ -100,6 +102,7 @@ class Board(object):
                 # Create the ship object
                 self.ship = Ship(ship_name, ship_size, sb)
 
+                # If vertical placement
                 if sb:
                     try:
                         if (ship_row_input + int(ship_size) - 1) not in range(self.num_rows):
@@ -116,7 +119,7 @@ class Board(object):
                         print('Cannot place {} {}ly at {} because it would overlap with {}'
                                   .format(ship_name, ship_or_input, ship_coord_input, Board))
                         continue
-
+                # If horizontal placement
                 if not sb:
                     try:
                         if (ship_col_input + int(ship_size) - 1) not in range(self.num_cols):
@@ -153,7 +156,7 @@ with open("configs/minor_game.txt") as config:
         (key, val) = line.split()
         ship_info[key] = val
 
-print(row, col, ship_info)
+print('Board dimension:',row, col+'\n', ship_info)
 
 b = Board(int(row), int(col), **ship_info)
 b.initialize_board()
