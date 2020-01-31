@@ -14,6 +14,7 @@ class Cell(object):
         return self.empty
 
     def update_cell(self, board, row, column, ship_name, ship_size, orientation):
+        # if orientation is vertical
         if orientation:
             for i in range(int(ship_size)):
                 self.check_occ = True

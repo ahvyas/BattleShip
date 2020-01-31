@@ -38,14 +38,24 @@ class Board(object):
             print(index, end=' ')
             print(*num_row, end='\n')
 
-    def coord_validate(self, board, ship_name, ship_size, row, col, sp):
-        if not sp:
+    def coord_validate(self, board, ship_name, ship_size, row, col, sb):
+        # For horizontal orientation
+        if not sb:
+            if (col+ship_size) > self.num_cols:
+                print('Cannot place {} horizontally at {}, {} because it will be out of bounds.'.format(ship_name,row,col))
+                return False
             for i in range(ship_size):
                 if board[row][col+i] != self.empty:
                     print('Cannot place {} horizontally at {}, {} because it would overlap with {}.'
                           .format(ship_name, row, col, self.shiplist))
                     return False
-        if sp:
+
+
+        # For vertical orientation
+        if sb:
+            if (row+ship_size)  > self.num_rows:
+                print('Cannot place {} vertically at {}, {} because it will be out of bounds.'.format(ship_name,row,col))
+                return False
             for j in range(ship_size):
                 if board[row+j][col] != self.empty:
                     print('Cannot place {} vertically at {}, {} because it would overlap with {}.'
@@ -139,10 +149,12 @@ class Board(object):
                 elif not valid_placement:
                     continue
 
+                # Break out of while loop when a ship is correctly placed
                 break
                 # CellChange = Cell(self.num_rows, self.num_cols)
                 # CellChange = CellChange.cell_update_move('hit')
                 # return print(CellChange)
+            # print out updated board
             self.format_board(self.b)
         return self.format_board(self.b)
 
