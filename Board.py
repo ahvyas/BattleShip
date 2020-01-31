@@ -140,7 +140,7 @@ class Board(object):
                 # CellChange = CellChange.cell_update_move('hit')
                 # return print(CellChange)
             self.format_board(self.b)
-        return self.format_board(self.b)
+        return self.b
 
     def update_board(self, user_move):
         ub = UpdateBoard()
