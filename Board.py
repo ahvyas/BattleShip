@@ -1,10 +1,11 @@
 from UpdateBoard import UpdateBoard
 from Cell import Cell
 from Ship import Ship
+from typing import List
 
 
 class Board(object):
-    def __init__(self, num_rows: int, num_cols: int, **kwargs: dict) -> None:
+    def __init__(self, num_rows: int, num_cols: int, existing_board: List = None, **kwargs: dict) -> None:
         # rows and columns
         self.num_rows = num_rows
         self.num_cols = num_cols
@@ -15,6 +16,8 @@ class Board(object):
         # self.miss = 'O'
         self.ship_info = kwargs
         self.cell = Cell(self.num_rows, self.num_cols)
+        self.b = existing_board
+
 
     def initialize_board(self):
         # creates 2D matrix for our game
@@ -25,6 +28,9 @@ class Board(object):
 
         # returns the board for internal manipulation
         return self.b
+
+    def board_mask(board):
+        mask = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
 
     # creates output for and formats the board
     def format_board(self, board):
