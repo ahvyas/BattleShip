@@ -15,7 +15,7 @@ class Board(object):
         # self.miss = 'O'
         self.ship_info = kwargs
         self.cell = Cell(self.num_rows, self.num_cols)
-        self.ship = None
+        self.shiplist = []
 
 
     def initialize_board(self):
@@ -38,13 +38,28 @@ class Board(object):
             print(index, end=' ')
             print(*num_row, end='\n')
 
-    def user_place_ship(self, ship_cols=None) -> None:
+    def coord_validate(self, board, ship_name, ship_size, row, col, sp):
+        if not sp:
+            for i in range(ship_size):
+                if board[row][col+i] != self.empty:
+                    print('Cannot place {} horizontally at {}, {} because it would overlap with {}.'
+                          .format(ship_name, row, col, self.shiplist))
+                    return False
+        if sp:
+            for j in range(ship_size):
+                if board[row+j][col] != self.empty:
+                    print('Cannot place {} vertically at {}, {} because it would overlap with {}.'
+                          .format(ship_name, row, col, self.shiplist))
+                    return False
+        return True
+
+    def user_place_ship(self) -> None:
         # Acceptable orientation names
         valid_orientation_hori = ['h', 'hori', 'horiz', 'horizontal']
         valid_orientation_vert = ['v', 'vert', 'verti', 'vertical']
 
         # Turn the ship orientation into a boolean value, makes it easier to code later
-        #True = Horizontal, False = Vertical
+        #True = Vertical, False = Horizontal
         def ship_orientation_bool(orientation_lingo: str) -> bool:
             if orientation_lingo in valid_orientation_vert:
                 return True
@@ -52,8 +67,10 @@ class Board(object):
                 return False
 
         for ship_name, ship_size in self.ship_info.items():
-            # calls the ship class
-            # ship inputs
+            #Ensures ships aren't placed on another
+            self.shiplist.append(ship_name)
+            ship_size = int(ship_size)
+            # user ship input
             while True:
                 try:
                     ship_or_input = input('Please enter orientation for ship {}, size {}: '
@@ -68,7 +85,7 @@ class Board(object):
                     print(ship_or_input + ' does not represent an Orientation')
                     continue
                 #Asks the user to input coordinates
-                ship_coord_input = input('Please enter the row, column for shipship {}, size {}: '
+                ship_coord_input = input('Please enter the row, column for ship {}, size {}: '
                                          .format(ship_name, ship_size))
                 try:
                     ship_row_input, ship_col_input = ship_coord_input.split(',')
@@ -99,40 +116,28 @@ class Board(object):
                 sb = ship_orientation_bool(ship_or_input)
                 # Create the ship object
                 self.ship = Ship(ship_name, ship_size, sb)
-
-                if sb:
+                valid_placement = self.coord_validate(self.b, ship_name, ship_size, ship_row_input, ship_col_input, sb)
+                if valid_placement:
+                    """
                     try:
-                        if (ship_row_input + int(ship_size) - 1) not in range(self.num_rows):
+                        if (ship_col_input + ship_size - 1) not in range(self.num_rows):
                             raise ValueError
                     except ValueError:
                         print('Cannot place {} {}ly at {} because it would be out of bounds.'.
                               format(ship_name, ship_or_input, ship_coord_input))
                         continue
-
+                    """
                     try:
-                        Board = self.cell.update_cell(self.b, ship_row_input, ship_col_input,
+                        self.b = self.cell.update_cell(self.b, ship_row_input, ship_col_input,
                                                                ship_name, ship_size, sb)
                     except ValueError:
                         print('Cannot place {} {}ly at {} because it would overlap with {}'
                                   .format(ship_name, ship_or_input, ship_coord_input, Board))
                         continue
 
-                if not sb:
-                    try:
-                        if (ship_col_input + int(ship_size) - 1) not in range(self.num_cols):
-                            raise ValueError
-                    except ValueError:
-                        print('Cannot place {} {}ly at {} because it would be out of bounds.'.
-                              format(ship_name, ship_or_input, ship_coord_input))
-                        continue
-                    try:
-                        Board = self.cell.update_cell(self.b, ship_row_input, ship_col_input,
-                                                               ship_name, ship_size, sb)
-                    except ValueError:
-                        print('Cannot place {} {}ly at {} because it would overlap with {}'
-                                  .format(ship_name, ship_or_input, ship_coord_input, Board))
-                        continue
-                self.b = Board
+                elif not valid_placement:
+                    continue
+
                 break
                 # CellChange = Cell(self.num_rows, self.num_cols)
                 # CellChange = CellChange.cell_update_move('hit')
@@ -145,16 +150,3 @@ class Board(object):
         ub.update(user_move, self.b)
 
 
-with open("configs/minor_game.txt") as config:
-    size = config.readline()
-    row, col = size.split()
-    ship_info = {}
-    for line in config:
-        (key, val) = line.split()
-        ship_info[key] = val
-
-print(row, col, ship_info)
-
-b = Board(int(row), int(col), **ship_info)
-b.initialize_board()
-b.user_place_ship()

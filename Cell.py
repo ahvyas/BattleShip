@@ -14,18 +14,17 @@ class Cell(object):
         return self.empty
 
     def update_cell(self, board, row, column, ship_name, ship_size, orientation):
-        if not self.check_occ:
-            if orientation:
-                for i in range(int(ship_size)):
-                    #self.check_occ = True
-                    board[row+i][column] = ship_name[0]
-                self.ship_name.append(ship_name)
-            if not orientation:
-                for j in range(int(ship_size)):
-                    #self.check_occ = True
-                    board[row][column + j] = ship_name[0]
-                self.ship_name.append(ship_name)
-            return board
+        if orientation:
+            for i in range(int(ship_size)):
+                self.check_occ = True
+                board[row+i][column] = ship_name[0]
+            self.ship_name.append(ship_name)
+        if not orientation:
+            for j in range(int(ship_size)):
+                self.check_occ = True
+                board[row][column + j] = ship_name[0]
+            self.ship_name.append(ship_name)
+        return board
 
     def cell_update_move(self, x='*'):
         self.check_occ = True
