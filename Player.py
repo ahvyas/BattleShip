@@ -12,10 +12,10 @@ class Player(object):
         print('Welcome to Battleship, General {}. Follow instructions to deploy your warships.'.format(self.name1.upper()))
         return self.name1
 
-    def get_name_2(self):
+    def get_name_2(self, name1):
         while True:
             self.name2 = input('Player 2, please enter name:')
-            if self.name2.lower() == self.name1.lower():
+            if self.name2.lower() == name1.lower():
                 print('Name has been taken, please choose another name')
                 continue
             break

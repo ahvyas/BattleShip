@@ -20,8 +20,9 @@ def setup():
 
     b2 = Board(int(row), int(col), **ship_info)
     player2 = Player()
-    p2_name = player1.get_name_2()
+    p2_name = player2.get_name_2(p1_name)
     b2.initialize_board()
     p2_board = b2.user_place_ship()
 
+    print('Warship deployment completed.')
     return row, col, ship_info, p1_name, p1_board, p2_name, p2_board

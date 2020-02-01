@@ -9,23 +9,73 @@ class Gameplay(object):
 
         self.p1_board = Board(int(num_rows), int(num_cols), p1_board, **ship_info)
         self.p2_board = Board(int(num_rows), int(num_cols), p2_board, **ship_info)
+        self.mask1 = Board(int(num_rows), int(num_cols), **ship_info) # mask 1 is for player 2 to look at
+        self.mask2 = Board(int(num_rows), int(num_cols), **ship_info) # mask 2 is for player 1 to look at
+        self.mask1.initialize_mask()
+        self.mask2.initialize_mask()
+        self.cell = Cell(int(num_rows), int(num_cols))
         self.player_turn = True
 
     def play(self):
-        print('Below are player placed boards')
-        self.p1_board.format_board(self.p2_board)
-        self.p2_board.format_board(self.p2_board)
+        print('Battle begins\n\n')
         while not self.someone_wins():
+            # True - player 1's turn
             if self.player_turn:
-                self.p1_board.format_board(self.p2_board)
-                self.ask_move()
-                self.make_move(self.p1, self.p1_board)
-        # Player1 turn if true, player2 turn if
-        player_turn = not player_turn
+                self.mask2.format_board()
+                x, y = self.ask_move(self.p1)
 
-    def ask_move(self):
+                if not self.check_move(x, y, self.p2_board.return_board()):
+                    continue
+
+                hit_or_miss = self.p2_board.get_result(x,y)
+                self.mask2.update_mask(x, y, hit_or_miss)
+                self.mask2.format_board()
+
+
+
+            # False - player 2's turn
+            if not self.player_turn:
+                self.mask1.format_board()
+                x, y = self.ask_move(self.p2)
+
+                if not self.check_move(x, y, self.p1_board.return_board()):
+                    continue
+
+                hit_or_miss = self.p1_board.get_result(x, y)
+                self.mask1.update_mask(x, y, hit_or_miss)
+                self.mask1.format_board()
+
+            # Switch player
+            self.player_turn = not self.player_turn
+            print('\n\n')
+
+
+    def ask_move(self,name):
+        print('General', name)
         coor = input('Where do you want to fire in x, y? ')
-        return coor
+        coor = coor.rstrip()
+        x, y = coor.split(',')
+        x = int(x)
+        y = int(y)
+
+        return x, y
+
+    def check_move(self,x,y,board):
+        try:
+            if board[x][y] == 'X':
+                print('Fired and missed, ')
+                return False
+            elif board[x][y] == 'O':
+                print('Fired and hit')
+                return False
+            else:
+                return True
+        except:
+            print('Enter a valid coordinate!')
+            return False
+
+
+
     def someone_wins(self):
         return False
 

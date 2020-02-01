@@ -5,18 +5,18 @@ from typing import List
 
 
 class Board(object):
-    def __init__(self, num_rows: int, num_cols: int, existing_board: List = None, **kwargs: dict) -> None:
+    def __init__(self, num_rows: int, num_cols: int, existing_board: List = [], **kwargs: dict) -> None:
         # rows and columns
         self.num_rows = num_rows
         self.num_cols = num_cols
         # initializes the board matrix
-        self.b = []
-        #self.empty = '*'
-        # self.hit = 'X'
-        # self.miss = 'O'
+        self.b = existing_board
+        self.empty = '*'
+        self.hit = 'X'
+        self.miss = 'O'
         self.ship_info = kwargs
         self.cell = Cell(self.num_rows, self.num_cols)
-        self.b = existing_board
+
 
 
     def initialize_board(self):
@@ -24,16 +24,25 @@ class Board(object):
         self.b = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
 
         #Initial Board UI
-        self.format_board(self.b)
+        self.format_board()
 
         # returns the board for internal manipulation
         return self.b
+
+    def return_board(self):
+        return self.b
+
+    def initialize_mask(self):
+        # creates 2D matrix for our game
+        self.b = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
+
+
 
     def board_mask(board):
         mask = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
 
     # creates output for and formats the board
-    def format_board(self, board):
+    def format_board(self):
         print(end='  ')
         for hor_num in range(self.num_rows):
             print(str(hor_num), end=" ")
@@ -145,11 +154,22 @@ class Board(object):
                 # CellChange = Cell(self.num_rows, self.num_cols)
                 # CellChange = CellChange.cell_update_move('hit')
                 # return print(CellChange)
-            self.format_board(self.b)
+            self.format_board()
         return self.b
 
-    def update_board(self, user_move):
-        ub = UpdateBoard()
-        ub.update(user_move, self.b)
+    def get_result(self, x, y):
+        if self.b[x][y] == self.empty:  # Case for miss
+            print('You missed')
+            return self.miss
+        else:  # Case for hit
+            self.ship_abb = self.b[x][y]
+            return self.hit
+
+
+
+    def update_mask(self, x, y, hit_or_miss):
+        self.b[x][y] = hit_or_miss
+
+
 
 
