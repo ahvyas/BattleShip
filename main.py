@@ -1,17 +1,18 @@
-from Board import Board
+from Setup import setup
+from Gameplay import Gameplay
+
 if __name__ == '__main__':
     pass
 
-with open("configs/minor_game.txt") as config:
-    size = config.readline()
-    row, col = size.split()
-    ship_info = {}
-    for line in config:
-        (key, val) = line.split()
-        ship_info[key] = val
+# Game setup
+rows, cols, ship_info, p1_name, p1_board, p2_name, p2_board = setup()
 
-print('Board dimension:',row, col+'\n', ship_info)
 
-b = Board(int(row), int(col), **ship_info)
-b.initialize_board()
-b.user_place_ship()
+# Game begins
+battle = Gameplay(p1_name, p1_board, p2_name, p2_board, rows, cols, **ship_info)
+battle.play()
+
+
+
+
+
