@@ -36,6 +36,7 @@ class Board(object):
             print(index, end=' ')
             print(*num_row, end='\n')
 
+    #validates coordinates given by the user
     def coord_validate(self, board: list, ship_name: str, ship_size: int, row: int, col: int, sp: bool) -> bool:
         s_name = []
         while not sp:
@@ -60,6 +61,7 @@ class Board(object):
 
             return True
 
+    #allows user to place ship
     def user_place_ship(self) -> None:
         # Acceptable orientation names
         valid_orientation_hori = ['h', 'hori', 'horiz', 'horizontal']
@@ -140,7 +142,7 @@ class Board(object):
                 # CellChange = CellChange.cell_update_move('hit')
                 # return print(CellChange)
             self.format_board(self.b)
-        return self.format_board(self.b)
+        return self.b
 
     def update_board(self, user_move):
         ub = UpdateBoard()
