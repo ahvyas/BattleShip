@@ -5,7 +5,7 @@ from typing import List
 
 
 class Board(object):
-    def __init__(self, num_rows: int, num_cols: int, existing_board: List = [], **kwargs: dict) -> None:
+    def __init__(self, num_rows: int, num_cols: int, existing_board: List = None, **kwargs: dict) -> None:
         # rows and columns
         self.num_rows = num_rows
         self.num_cols = num_cols
@@ -32,14 +32,6 @@ class Board(object):
     def return_board(self):
         return self.b
 
-    def initialize_mask(self):
-        # creates 2D matrix for our game
-        self.b = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
-
-
-
-    def board_mask(board):
-        mask = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
 
     # creates output for and formats the board
     def format_board(self):
@@ -163,12 +155,12 @@ class Board(object):
             return self.miss
         else:  # Case for hit
             self.ship_abb = self.b[x][y]
+            print('You hit')
             return self.hit
 
-
-
-    def update_mask(self, x, y, hit_or_miss):
+    def update_board(self, x, y, hit_or_miss):
         self.b[x][y] = hit_or_miss
+
 
 
 

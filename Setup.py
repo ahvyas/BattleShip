@@ -24,5 +24,5 @@ def setup():
     b2.initialize_board()
     p2_board = b2.user_place_ship()
 
-    print('Warship deployment completed.')
+    print('Warship deployment completed.\n\n')
     return row, col, ship_info, p1_name, p1_board, p2_name, p2_board
