@@ -23,7 +23,6 @@ class Game(object):
         self.p1_ships = ship_info
         self.p2_ships = ship_info
 
-
     def play(self) -> None:
         print('Battle begins\n')
         while not self.someone_wins():
