@@ -19,6 +19,7 @@ class Board(object):
 
 
 
+
     def initialize_board(self):
         # creates 2D matrix for our game
         self.b = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
@@ -88,9 +89,9 @@ class Board(object):
                 try:
                     ship_or_input = input('Please enter orientation for ship {}, size {}: '
                                           .format(ship_name, ship_size))
-                    if ship_or_input.lower() in valid_orientation_hori:
+                    if ship_or_input.lower().startswith('h'):
                         ship_or_input = 'horizontal'
-                    elif ship_or_input.lower() in valid_orientation_vert:
+                    elif ship_or_input.lower().startswith('v'):
                         ship_or_input = 'vertical'
                     else:
                         raise ValueError
@@ -160,6 +161,12 @@ class Board(object):
 
     def update_board(self, x, y, hit_or_miss):
         self.b[x][y] = hit_or_miss
+        self.update_ship()
+
+    def update_ship(self):
+        pass
+
+
 
 
 

@@ -1,3 +1,4 @@
+
 class Ship(object):
     def __init__(self, name: str, size: int, orientation: bool) -> list:
         self.name = name

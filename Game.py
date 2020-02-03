@@ -55,10 +55,10 @@ class Game(object):
     def ask_move(self,name):
         print('General', name.upper())
         coor = input('Where do you want to fire in x, y? ')
-        coor = coor.rstrip()
+        coor = coor.strip()
         x, y = coor.split(',')
-        x = int(x)
-        y = int(y)
+        x = int(x.rstrip())
+        y = int(y.lstrip())
         return x, y
 
     def check_move(self,x,y,board):
@@ -78,7 +78,7 @@ class Game(object):
 
 
     def someone_wins(self):
-        
+
         return False
 
 
