@@ -1,4 +1,3 @@
-from UpdateBoard import UpdateBoard
 from Cell import Cell
 from Ship import Ship
 from typing import List

@@ -1,7 +1,5 @@
-from typing import Union
-
 class Cell(object):
-    def __init__(self, num_rows: int, num_cols: int) -> Union[str, int]:
+    def __init__(self, num_rows: int, num_cols: int) -> None:
         self.num_rows = num_rows
         self.num_cols = num_cols
         # Types of states of board
@@ -28,10 +26,3 @@ class Cell(object):
                 board[row][column + j] = ship_name[0]
             self.ship_name.append(ship_name)
         return board
-
-    def cell_update_move(self, x='*'):
-        self.check_occ = True
-        if x == 'hit':
-            return self.hit, self.flag
-        if x == 'miss':
-            return self.miss, self.flag

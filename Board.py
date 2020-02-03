@@ -1,7 +1,6 @@
-from UpdateBoard import UpdateBoard
 from Cell import Cell
-from Ship import Ship
-from typing import List
+from typing import List, Any
+from typing import Tuple
 
 
 class Board(object):
@@ -15,10 +14,8 @@ class Board(object):
         self.hit = 'X'
         self.miss = 'O'
         self.ship_info = kwargs
+        self.ship_abb = None
         self.cell = Cell(self.num_rows, self.num_cols)
-
-
-
 
     def initialize_board(self) -> List:
         # creates 2D matrix for our game
@@ -32,7 +29,6 @@ class Board(object):
 
     def return_board(self) -> List:
         return self.b
-
 
     # creates output for and formats the board
     def format_board(self) -> None:
@@ -130,8 +126,6 @@ class Board(object):
 
                 # call the ship_orientation bool object
                 sb = ship_orientation_bool(ship_or_input)
-                # Create the ship object
-                #self.ship = Ship(ship_name, ship_size, sb)
                 try:
                     valid_placement = self.coord_validate(self.b, ship_name, ship_size, ship_row_input, ship_col_input, sb)
                 except IndexError:
@@ -146,20 +140,17 @@ class Board(object):
                     continue
 
                 break
-                # CellChange = Cell(self.num_rows, self.num_cols)
-                # CellChange = CellChange.cell_update_move('hit')
-                # return print(CellChange)
+
             self.format_board()
         return self.b
 
-    def get_result(self, x: int, y: int) -> str:
+    def get_result(self, x: int, y: int) -> Tuple[str, Any]:
+        self.ship_abb = self.b[x][y]
         if self.b[x][y] == self.empty:  # Case for miss
-            print('You missed')
-            return self.miss
+            print('Miss')
+            return self.miss, self.ship_abb
         else:  # Case for hit
-            self.ship_abb = self.b[x][y]
-            print('You hit')
-            return self.hit
+            return self.hit, self.ship_abb
 
     def update_board(self, x: int, y: int, hit_or_miss: str) -> None:
         self.b[x][y] = hit_or_miss

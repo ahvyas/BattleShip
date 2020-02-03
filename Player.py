@@ -16,7 +16,7 @@ class Player(object):
         while True:
             self.name2 = input('Player 2, please enter name:')
             if self.name2.lower() == name1.lower():
-                print('Name has been taken, please choose another name')
+                print('That name has been taken, please choose another name.')
                 continue
             break
         print('Welcome to Battleship, General {}. Follow instructions to deploy your warships.'.format(self.name2.upper()))
