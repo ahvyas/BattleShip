@@ -20,7 +20,7 @@ class Board(object):
 
 
 
-    def initialize_board(self):
+    def initialize_board(self) -> List:
         # creates 2D matrix for our game
         self.b = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
 
@@ -30,12 +30,12 @@ class Board(object):
         # returns the board for internal manipulation
         return self.b
 
-    def return_board(self):
+    def return_board(self) -> List:
         return self.b
 
 
     # creates output for and formats the board
-    def format_board(self):
+    def format_board(self) -> None:
         print(end='  ')
         for hor_num in range(self.num_rows):
             print(str(hor_num), end=" ")
@@ -150,7 +150,7 @@ class Board(object):
             self.format_board()
         return self.b
 
-    def get_result(self, x, y):
+    def get_result(self, x: int, y: int) -> str:
         if self.b[x][y] == self.empty:  # Case for miss
             print('You missed')
             return self.miss
@@ -159,7 +159,7 @@ class Board(object):
             print('You hit')
             return self.hit
 
-    def update_board(self, x, y, hit_or_miss):
+    def update_board(self, x: int, y: int, hit_or_miss: str) -> None:
         self.b[x][y] = hit_or_miss
         self.update_ship()
 

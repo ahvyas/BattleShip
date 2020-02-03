@@ -2,8 +2,10 @@ from Board import Board
 from Mask import Mask
 from Cell import Cell
 
+from typing import List
+
 class Game(object):
-    def __init__(self, p1_name, p1_board, p2_name, p2_board, num_rows, num_cols,  **ship_info):
+    def __init__(self, p1_name, p1_board, p2_name, p2_board, num_rows, num_cols,  **ship_info) -> None:
         self.ship_info = ship_info
         self.p1 = p1_name
         self.p2 = p2_name
@@ -18,7 +20,7 @@ class Game(object):
         self.player_turn = True
 
 
-    def play(self):
+    def play(self) -> None:
         print('Battle begins\n')
         while not self.someone_wins():
             # True - player 1's turn
@@ -52,7 +54,7 @@ class Game(object):
             print('\n\n')
 
 
-    def ask_move(self,name):
+    def ask_move(self,name: str):
         print('General', name.upper())
         coor = input('Where do you want to fire in x, y? ')
         coor = coor.strip()
@@ -61,7 +63,7 @@ class Game(object):
         y = int(y.lstrip())
         return x, y
 
-    def check_move(self,x,y,board):
+    def check_move(self,x: int, y: int, board: List):
         try:
             if board[x][y] == 'X':
                 print('Fired and missed, ')

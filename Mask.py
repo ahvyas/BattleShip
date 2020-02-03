@@ -17,11 +17,11 @@ class Mask(object):
         self.ship_info = kwargs
         self.cell = Cell(self.num_rows, self.num_cols)
 
-    def initialize_mask(self):
+    def initialize_mask(self) -> None:
         # creates 2D matrix for our game
         self.b = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
 
-    def format_mask(self):
+    def format_mask(self) -> None:
         print(end='  ')
         for hor_num in range(self.num_rows):
             print(str(hor_num), end=" ")
@@ -30,6 +30,6 @@ class Mask(object):
             print(index, end=' ')
             print(*num_row, end='\n')
 
-    def update_mask(self, x, y, hit_or_miss):
+    def update_mask(self, x: int, y: int, hit_or_miss: str) -> None:
         self.b[x][y] = hit_or_miss
 
