@@ -13,14 +13,13 @@ def setup():
     print('Board dimension:',row, 'x', col+'\n', ship_info)
 
     b1 = Board(int(row), int(col), **ship_info)
-    player1 = Player()
-    p1_name = player1.get_name_1()
+    player = Player()
+    p1_name = player.get_name_1()
     b1.initialize_board()
     p1_board = b1.user_place_ship()
 
     b2 = Board(int(row), int(col), **ship_info)
-    player2 = Player()
-    p2_name = player2.get_name_2(p1_name)
+    p2_name = player.get_name_2()
     b2.initialize_board()
     p2_board = b2.user_place_ship()
 

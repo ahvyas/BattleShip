@@ -1,14 +1,15 @@
 from Board import Board
 from Mask import Mask
 from Cell import Cell
+from Player import Player
 
 from typing import List
 
 class Game(object):
     def __init__(self, p1_name, p1_board, p2_name, p2_board, num_rows, num_cols,  **ship_info) -> None:
         self.ship_info = ship_info
-        self.p1 = p1_name
-        self.p2 = p2_name
+        self.Player1 = Player(p1_name)
+        self.Player2 = Player(p2_name)
 
         self.p1_board = Board(int(num_rows), int(num_cols), p1_board, **ship_info)
         self.p2_board = Board(int(num_rows), int(num_cols), p2_board, **ship_info)
@@ -26,7 +27,7 @@ class Game(object):
             # True - player 1's turn
             if self.player_turn:
                 self.mask2.format_mask()
-                x, y = self.ask_move(self.p1)
+                x, y = self.ask_move(self.Player1.return_name())
 
                 if not self.check_move(x, y, self.p2_board.return_board()):
                     continue
@@ -39,7 +40,7 @@ class Game(object):
             # False - player 2's turn
             if not self.player_turn:
                 self.mask1.format_mask()
-                x, y = self.ask_move(self.p2)
+                x, y = self.ask_move(self.Player2.return_name())
 
                 if not self.check_move(x, y, self.p1_board.return_board()):
                     continue
