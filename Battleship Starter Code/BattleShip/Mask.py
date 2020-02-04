@@ -20,7 +20,7 @@ class Mask(object):
 
     def format_mask(self) -> None:
         print(end='  ')
-        for hor_num in range(self.num_rows):
+        for hor_num in range(self.num_cols):
             print(str(hor_num), end=" ")
         print('')
         for index, num_row in enumerate(self.b):
