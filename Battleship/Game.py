@@ -85,7 +85,8 @@ class Game(object):
 
     def ask_move(self, name: str) -> Tuple[int, int]:
         while True:
-            coor = input('General {}, where do you want to fire in x, y?'.format(name))
+            coor = input('General {}, where do you want to fire in x, y? '.format(name))
+            print('')
             coor = coor.strip()
             try:
                 x, y = coor.split(',')
@@ -113,7 +114,7 @@ class Game(object):
             else:
                 return True
         except IndexError:
-            print('{}, {} is not in bounds of our {} X {} board.'.format(x, y, self.num_rows, self.num_cols))
+            print('{}, {} is not in bounds of our {} X {} board.\n'.format(x, y, self.num_rows, self.num_cols))
             return False
 
     def someone_wins(self, *winner_name: str) -> bool:
