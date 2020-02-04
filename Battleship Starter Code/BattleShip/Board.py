@@ -38,7 +38,8 @@ class Board(object):
         for index, num_row in enumerate(self.b):
             print(index, end=' ')
             print(*num_row, end='\n')
-    def gen_valid_or(self, word):
+
+    def gen_valid_or(self, word: str) -> list:
         text = word[0::]
         l = [word[0]]
         for i in range(1, len(word) + 1):
@@ -94,6 +95,7 @@ class Board(object):
                 try:
                     ship_or_input = input('{} enter horizontal or vertical for the orientation of {} which is {} long: '
                                           .format(user_name, ship_name, ship_size))
+                    ship_or_input.strip()
                     if ship_or_input.lower() in valid_orientation_hori:
                         ship_or_input = 'horizontal'
                     elif ship_or_input.lower() in valid_orientation_vert:
