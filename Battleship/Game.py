@@ -1,7 +1,7 @@
-from Board import Board
-from Mask import Mask
-from Cell import Cell
-from Ship import Ship
+from Battleship.Board import Board
+from Battleship.Mask import Mask
+from Battleship.Cell import Cell
+from Battleship.Ship import Ship
 from typing import Tuple, List
 import time
 

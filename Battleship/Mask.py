@@ -1,6 +1,5 @@
-from Cell import Cell
-from Ship import Ship
-from typing import List
+from Battleship.Cell import Cell
+
 
 
 class Mask(object):

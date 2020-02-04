@@ -1,5 +1,5 @@
-from Setup import Setup
-from Game import Game
+from Battleship.Setup import Setup
+from Battleship.Game import Game
 import sys
 
 if __name__ == '__main__':

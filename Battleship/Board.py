@@ -1,4 +1,4 @@
-from Cell import Cell
+from Battleship.Cell import Cell
 from typing import List, Any
 from typing import Tuple
 
