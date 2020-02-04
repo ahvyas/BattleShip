@@ -7,7 +7,7 @@ class Cell(object):
         self.check_occ = False
         self.ship_name = []
 
-    def first_board_init(self):
+    def first_board_init(self) -> str:
         return self.empty
 
     def update_cell(self, board, row, column, ship_name, ship_size, orientation):

@@ -1,7 +1,6 @@
 from Battleship.Cell import Cell
 
 
-
 class Mask(object):
     def __init__(self, num_rows: int, num_cols: int, existing_board: object) -> None:
         # rows and columns
