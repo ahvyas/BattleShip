@@ -1,6 +1,3 @@
-import time
-
-
 class Ship(object):
     def __init__(self, ship_list: dict):
         self.ship_list = ship_list
@@ -17,8 +14,7 @@ class Ship(object):
                 updated_size = int(s[name])
                 updated_size -= 1
                 if updated_size < 1:
-                    print("You destroyed {}'s {}\n".format(p_name, name))
-                    time.sleep(1)
+                    print("You destroyed {}'s {}".format(p_name, name))
                     s.pop(name)
                     return s
                 s[name] = updated_size

@@ -1,4 +1,4 @@
-from .Cell import Cell
+from Cell import Cell
 from typing import List, Any
 from typing import Tuple
 
@@ -19,13 +19,12 @@ class Board(object):
 
     def initialize_board(self) -> List:
         # creates 2D matrix for our game
-        self.b = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
+        self.b = [[self.cell.first_board_init() for i in range(self.num_cols)] for j in range(self.num_rows)]
 
         #Initial Board UI
         self.format_board()
 
         # returns the board for internal manipulation
-        return self.b
 
     def return_board(self) -> List:
         return self.b
@@ -33,7 +32,7 @@ class Board(object):
     # creates output for and formats the board
     def format_board(self) -> None:
         print(end='  ')
-        for hor_num in range(self.num_rows):
+        for hor_num in range(self.num_cols):
             print(str(hor_num), end=" ")
         print('')
         for index, num_row in enumerate(self.b):
@@ -66,7 +65,7 @@ class Board(object):
             return True
 
     #allows user to place ship
-    def user_place_ship(self) -> None:
+    def user_place_ship(self, user_name: str) -> None:
         # Acceptable orientation names
         #valid_orientation_hori = ['h', 'hori', 'horiz', 'horizontal']
         #valid_orientation_vert = ['v', 'vert', 'verti', 'vertical']
@@ -87,8 +86,8 @@ class Board(object):
             # user ship input
             while True:
                 try:
-                    ship_or_input = input('Please enter orientation for ship {}, size {}: '
-                                          .format(ship_name, ship_size))
+                    ship_or_input = input('{} enter horizontal or vertical for the orientation of {} which is {} long: '
+                                          .format(user_name, ship_name, ship_size))
                     if ship_or_input.lower().startswith('h'):
                         ship_or_input = 'horizontal'
                     elif ship_or_input.lower().startswith('v'):
@@ -99,8 +98,8 @@ class Board(object):
                     print(ship_or_input + ' does not represent an Orientation')
                     continue
                 #Asks the user to input coordinates
-                ship_coord_input = input('Please enter the row, column for ship {}, size {}: '
-                                         .format(ship_name, ship_size))
+                ship_coord_input = input('{}, enter the starting position for your {} ship ,which is {} long, '
+                                         'in the form row, column'.format(user_name, ship_name, ship_size))
                 try:
                     ship_row_input, ship_col_input = ship_coord_input.split(',')
                 except ValueError:

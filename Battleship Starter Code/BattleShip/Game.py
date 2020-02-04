@@ -1,15 +1,14 @@
-from .Board import Board
-from .Mask import Mask
-from .Cell import Cell
-from .Ship import Ship
+from Board import Board
+from Mask import Mask
+from Cell import Cell
+from Ship import Ship
 from typing import Tuple, List
-import time
 
 
 class Game(object):
     def __init__(self, p1_name, p1_board, p2_name, p2_board, num_rows, num_cols,  **ship_info) -> None:
-        self.p1 = p1_name.upper()
-        self.p2 = p2_name.upper()
+        self.p1 = p1_name
+        self.p2 = p2_name
         self.num_rows = num_rows
         self.num_cols = num_cols
         self.p1_board = Board(int(num_rows), int(num_cols), p1_board, **ship_info)
@@ -24,16 +23,15 @@ class Game(object):
         self.ships = ship_info
 
     def play(self) -> None:
-        print('Battle begins\n')
         p1_ship = self.s.new_dict()
         p2_ship = self.s.new_dict()
         while not self.someone_wins():
 
             # True - player 1's turn
             if self.player_turn:
-                print('Attack Board')
+                print("{}'s Scanning Board".format(self.p1))
                 self.mask2.format_mask()
-                print('Your Board')
+                print("{}'s Board".format(self.p1))
                 self.p1_board.format_board()
                 x, y = self.ask_move(self.p1)
 
@@ -42,23 +40,22 @@ class Game(object):
 
                 hit_or_miss, ship_abb = self.p2_board.get_result(x, y)
                 if hit_or_miss == 'X':
-                    ship_name = [name for name, size in p1_ship.items() if name.startswith(ship_abb)]
+                    ship_name = [name for name, size in self.ships.items() if name.startswith(ship_abb)]
                     print("You hit {}'s {}".format(self.p2, *ship_name))
-                    time.sleep(1)
                     p2_ship = self.s.update_ship(self.p2, p2_ship, ship_abb)
 
                     if not p2_ship:
                         self.someone_wins(self.p1)
-                        break
+                        exit()
                 self.mask2.update_mask(x, y, hit_or_miss)
                 self.p2_board.update_board(x, y, hit_or_miss)
                 self.mask2.format_mask()
 
             # False - player 2's turn
             if not self.player_turn:
-                print('Attack Board')
+                print("{}'s Scanning Board".format(self.p2))
                 self.mask1.format_mask()
-                print('Your Board')
+                print("{}'s Board".format(self.p2))
                 self.p2_board.format_board()
                 x, y = self.ask_move(self.p2)
 
@@ -67,9 +64,8 @@ class Game(object):
 
                 hit_or_miss, ship_abb = self.p1_board.get_result(x, y)
                 if hit_or_miss == 'X':
-                    ship_name = [name for name, size in p1_ship.items() if name.startswith(ship_abb)]
-                    print("You hit {}'s {}".format(self.p1, *ship_name))
-                    time.sleep(1)
+                    ship_name = [name for name, size in self.ships.items() if name.startswith(ship_abb)]
+                    print("You hit {}'s {}!".format(self.p1, *ship_name))
                     p1_ship = self.s.update_ship(self.p1, p1_ship, ship_abb)
 
                     if not p1_ship:
@@ -85,8 +81,7 @@ class Game(object):
 
     def ask_move(self, name: str) -> Tuple[int, int]:
         while True:
-            coor = input('General {}, where do you want to fire in x, y? '.format(name))
-            print('')
+            coor = input("{} enter the location you want to fire at in the form row, column:".format(name))
             coor = coor.strip()
             try:
                 x, y = coor.split(',')
@@ -109,17 +104,18 @@ class Game(object):
     def check_move(self,x: int, y: int, board: List):
         try:
             if board[x][y] == 'X' or board[x][y] == 'O':
-                print('You have already fired at {}, {}.\n'.format(x, y))
+                print('You have already fired at {}, {}.'.format(x, y))
                 return False
             else:
                 return True
         except IndexError:
-            print('{}, {} is not in bounds of our {} X {} board.\n'.format(x, y, self.num_rows, self.num_cols))
+            print('{}, {} is not in bounds of our {} X {} board.'.format(x, y, self.num_rows, self.num_cols))
             return False
 
     def someone_wins(self, *winner_name: str) -> bool:
         if winner_name:
-            print('Congratulations, General {} has won the game!'.format(*winner_name))
-            return True
+            print('{} has won the game!'.format(*winner_name))
+            exit()
+            #return True
 
         return False

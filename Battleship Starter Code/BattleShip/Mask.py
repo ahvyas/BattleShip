@@ -1,4 +1,4 @@
-from .Cell import Cell
+from Cell import Cell
 
 
 class Mask(object):
@@ -16,7 +16,7 @@ class Mask(object):
 
     def initialize_mask(self) -> None:
         # creates 2D matrix for our game
-        self.b = [[self.cell.first_board_init() for i in range(self.num_rows)] for j in range(self.num_cols)]
+        self.b = [[self.cell.first_board_init() for i in range(self.num_cols)] for j in range(self.num_rows)]
 
     def format_mask(self) -> None:
         print(end='  ')
