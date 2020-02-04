@@ -108,7 +108,7 @@ class Game(object):
     def check_move(self,x: int, y: int, board: List):
         try:
             if board[x][y] == 'X' or board[x][y] == 'O':
-                print('You have already fired at {}, {}.'.format(x, y))
+                print('You have already fired at {}, {}.\n'.format(x, y))
                 return False
             else:
                 return True
