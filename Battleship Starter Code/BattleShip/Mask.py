@@ -19,13 +19,14 @@ class Mask(object):
         self.b = [[self.cell.first_board_init() for i in range(self.num_cols)] for j in range(self.num_rows)]
 
     def format_mask(self) -> None:
-        print(end='  ')
+        print(end=' ')
         for hor_num in range(self.num_cols):
-            print(str(hor_num), end=" ")
+            print('', str(hor_num), end="")
         print('')
         for index, num_row in enumerate(self.b):
             print(index, end=' ')
             print(*num_row, end='\n')
+        print('')
 
     def update_mask(self, x: int, y: int, hit_or_miss: str) -> None:
         self.b[x][y] = hit_or_miss

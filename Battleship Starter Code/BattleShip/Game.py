@@ -21,6 +21,8 @@ class Game(object):
         self.player_turn = True
         self.s = Ship(ship_info)
         self.ships = ship_info
+        self.winner = False
+        self.winner_name = None
 
     def play(self) -> None:
         p1_ship = self.s.new_dict()
@@ -41,15 +43,28 @@ class Game(object):
                 hit_or_miss, ship_abb = self.p2_board.get_result(x, y)
                 if hit_or_miss == 'X':
                     ship_name = [name for name, size in self.ships.items() if name.startswith(ship_abb)]
-                    print("You hit {}'s {}".format(self.p2, *ship_name))
+                    print("You hit {}'s {}!".format(self.p2, *ship_name))
                     p2_ship = self.s.update_ship(self.p2, p2_ship, ship_abb)
 
                     if not p2_ship:
                         self.someone_wins(self.p1)
-                        exit()
+                        self.mask2.update_mask(x, y, hit_or_miss)
+                        self.p2_board.update_board(x, y, hit_or_miss)
+                        print("{}'s Scanning Board".format(self.p1))
+                        self.mask2.format_mask()
+                        print("{}'s Board".format(self.p1))
+                        self.p1_board.format_board()
+                        print('')
+
+                        break
+
                 self.mask2.update_mask(x, y, hit_or_miss)
                 self.p2_board.update_board(x, y, hit_or_miss)
+                print("{}'s Scanning Board".format(self.p1))
                 self.mask2.format_mask()
+                print("{}'s Board".format(self.p1))
+                self.p1_board.format_board()
+                print('')
 
             # False - player 2's turn
             if not self.player_turn:
@@ -70,23 +85,41 @@ class Game(object):
 
                     if not p1_ship:
                         self.someone_wins(self.p2)
+                        print("{}'s Scanning Board".format(self.p2))
+                        self.mask1.update_mask(x, y, hit_or_miss)
+                        self.p1_board.update_board(x, y, hit_or_miss)
+                        self.mask1.format_mask()
+                        print("{}'s Board".format(self.p2))
+                        self.p2_board.format_board()
+                        print('')
+
                         break
+                print("{}'s Scanning Board".format(self.p2))
                 self.mask1.update_mask(x, y, hit_or_miss)
                 self.p1_board.update_board(x, y, hit_or_miss)
                 self.mask1.format_mask()
+                print("{}'s Board".format(self.p2))
+                self.p2_board.format_board()
+                print('')
+
 
             # Switch player
             self.player_turn = not self.player_turn
-            print('\n\n')
+
+        if self.winner:
+
+            print("{} won the game!".format(*self.winner_name))
+            return None
 
     def ask_move(self, name: str) -> Tuple[int, int]:
+        print('')
         while True:
-            coor = input("{} enter the location you want to fire at in the form row, column:".format(name))
+            coor = input("{}, enter the location you want to fire at in the form row, column: ".format(name))
             coor = coor.strip()
             try:
                 x, y = coor.split(',')
             except ValueError:
-                print('{} is not a valid location.\n Enter the firing location in the form row, column'.format(coor))
+                print('{} is not a valid location.\nEnter the firing location in the form row, column.'.format(coor))
                 continue
             try:
                 x = int(x.rstrip())
@@ -114,8 +147,7 @@ class Game(object):
 
     def someone_wins(self, *winner_name: str) -> bool:
         if winner_name:
-            print('{} has won the game!'.format(*winner_name))
-            exit()
-            #return True
+            self.winner_name = winner_name
+            self.winner = True
 
         return False

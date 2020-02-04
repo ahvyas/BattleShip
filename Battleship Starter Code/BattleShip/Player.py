@@ -13,9 +13,9 @@ class Player(object):
 
     def get_name_2(self, name1: str) -> str:
         while True:
-            self.name2 = input('Player 2 please enter your name:')
+            self.name2 = input('Player 2 please enter your name: ')
             if self.name2.lower() == name1.lower():
-                print('Someone is already using {} for their name.'.format(name1))
+                print('Someone is already using {} for their name.\nPlease choose another name.'.format(name1))
                 continue
             break
         print("{}'s Placement Board".format(self.name2))

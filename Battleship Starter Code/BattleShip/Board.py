@@ -31,13 +31,19 @@ class Board(object):
 
     # creates output for and formats the board
     def format_board(self) -> None:
-        print(end='  ')
+        print(end=' ')
         for hor_num in range(self.num_cols):
-            print(str(hor_num), end=" ")
+            print("", str(hor_num), end= "")
         print('')
         for index, num_row in enumerate(self.b):
             print(index, end=' ')
             print(*num_row, end='\n')
+    def gen_valid_or(self, word):
+        text = word[0::]
+        l = [word[0]]
+        for i in range(1, len(word) + 1):
+            l.append(text[:i])
+        return l
 
     #validates coordinates given by the user
     def coord_validate(self, board: list, ship_name: str, ship_size: int, row: int, col: int, sp: bool) -> bool:
@@ -67,8 +73,8 @@ class Board(object):
     #allows user to place ship
     def user_place_ship(self, user_name: str) -> None:
         # Acceptable orientation names
-        #valid_orientation_hori = ['h', 'hori', 'horiz', 'horizontal']
-        #valid_orientation_vert = ['v', 'vert', 'verti', 'vertical']
+        #valid_orientation_hori = self.gen_valid_or('horizontal')
+        #valid_orientation_vert = self.gen_valid_or('vertical')
         valid_orientation_hori = 'horizontal'
         valid_orientation_vert = 'vertical'
 
@@ -88,9 +94,9 @@ class Board(object):
                 try:
                     ship_or_input = input('{} enter horizontal or vertical for the orientation of {} which is {} long: '
                                           .format(user_name, ship_name, ship_size))
-                    if ship_or_input.lower().startswith('h'):
+                    if ship_or_input.lower() in valid_orientation_hori:
                         ship_or_input = 'horizontal'
-                    elif ship_or_input.lower().startswith('v'):
+                    elif ship_or_input.lower() in valid_orientation_vert:
                         ship_or_input = 'vertical'
                     else:
                         raise ValueError
@@ -108,7 +114,7 @@ class Board(object):
                 try:
                     ship_row_input = int(ship_row_input)
                 except ValueError:
-                    print('row: {} is not a valid value for row.\n It should be an integer between 0 '
+                    print('row: {} is not a valid value for row.\nIt should be an integer between 0 '
                           'and {}'.format(ship_row_input, self.num_rows - 1))
                     continue
                 try:
@@ -148,7 +154,7 @@ class Board(object):
     def get_result(self, x: int, y: int) -> Tuple[str, Any]:
         self.ship_abb = self.b[x][y]
         if self.b[x][y] == self.empty:  # Case for miss
-            print('Miss\n')
+            print('Miss')
             return self.miss, self.ship_abb
         else:  # Case for hit
             return self.hit, self.ship_abb
