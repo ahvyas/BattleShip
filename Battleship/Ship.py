@@ -1,5 +1,6 @@
 import time
 
+
 class Ship(object):
     def __init__(self, ship_list: dict):
         self.ship_list = ship_list

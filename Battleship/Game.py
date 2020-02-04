@@ -1,7 +1,7 @@
-from Battleship.Board import Board
-from Battleship.Mask import Mask
-from Battleship.Cell import Cell
-from Battleship.Ship import Ship
+from .Board import Board
+from .Mask import Mask
+from .Cell import Cell
+from .Ship import Ship
 from typing import Tuple, List
 import time
 
@@ -44,9 +44,8 @@ class Game(object):
                 if hit_or_miss == 'X':
                     ship_name = [name for name, size in p1_ship.items() if name.startswith(ship_abb)]
                     print("You hit {}'s {}".format(self.p2, *ship_name))
-                    time.sleep(2)
+                    time.sleep(1)
                     p2_ship = self.s.update_ship(self.p2, p2_ship, ship_abb)
-                    time.sleep(2)
 
                     if not p2_ship:
                         self.someone_wins(self.p1)

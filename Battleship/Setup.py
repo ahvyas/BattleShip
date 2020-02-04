@@ -1,5 +1,5 @@
-from Battleship.Board import Board
-from Battleship.Player import Player
+from .Board import Board
+from .Player import Player
 
 
 class Setup(object):

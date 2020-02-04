@@ -1,4 +1,4 @@
-from Battleship.Cell import Cell
+from .Cell import Cell
 
 
 class Mask(object):
