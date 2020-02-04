@@ -50,7 +50,7 @@ class Board(object):
             if len(s_name):
                 s_name.sort()
                 print('Cannot place {} horizontally at {}, {} because it would overlap with {}.'
-                          .format(ship_name, row, col, s_name))
+                          .format(ship_name, row, col, *s_name))
                 return False
             return True
         while sp:
@@ -60,7 +60,7 @@ class Board(object):
                 if len(s_name):
                     s_name.sort()
                     print('Cannot place {} vertically at {}, {} because it would overlap with {}.'
-                          .format(ship_name, row, col, s_name))
+                          .format(ship_name, row, col, *s_name))
                     return False
 
             return True
@@ -154,14 +154,3 @@ class Board(object):
 
     def update_board(self, x: int, y: int, hit_or_miss: str) -> None:
         self.b[x][y] = hit_or_miss
-        self.update_ship()
-
-    def update_ship(self):
-        pass
-
-
-
-
-
-
-

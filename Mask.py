@@ -4,7 +4,7 @@ from typing import List
 
 
 class Mask(object):
-    def __init__(self, num_rows: int, num_cols: int, existing_board: List = [], **kwargs: dict) -> None:
+    def __init__(self, num_rows: int, num_cols: int, existing_board: list) -> None:
         # rows and columns
         self.num_rows = num_rows
         self.num_cols = num_cols
@@ -13,7 +13,7 @@ class Mask(object):
         self.empty = '*'
         self.hit = 'X'
         self.miss = 'O'
-        self.ship_info = kwargs
+
         self.cell = Cell(self.num_rows, self.num_cols)
 
     def initialize_mask(self) -> None:
