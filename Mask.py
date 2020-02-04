@@ -4,7 +4,7 @@ from typing import List
 
 
 class Mask(object):
-    def __init__(self, num_rows: int, num_cols: int, existing_board: list) -> None:
+    def __init__(self, num_rows: int, num_cols: int, existing_board: object) -> None:
         # rows and columns
         self.num_rows = num_rows
         self.num_cols = num_cols

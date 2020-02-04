@@ -2,10 +2,7 @@ class Cell(object):
     def __init__(self, num_rows: int, num_cols: int) -> None:
         self.num_rows = num_rows
         self.num_cols = num_cols
-        # Types of states of board
         self.empty = '*'
-        self.hit = 'X'
-        self.miss = 'O'
         #check if it's been fired upon
         self.check_occ = False
         self.ship_name = []

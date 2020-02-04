@@ -5,6 +5,7 @@ from Ship import Ship
 from typing import Tuple, List
 import time
 
+
 class Game(object):
     def __init__(self, p1_name, p1_board, p2_name, p2_board, num_rows, num_cols,  **ship_info) -> None:
         self.p1 = p1_name.upper()

@@ -3,22 +3,16 @@ from Player import Player
 
 
 class Setup(object):
-    def __init__(self):
-        self.row = None
-        self.col = None
-        self.ship_info = {}
+    def __init__(self, row, col, ship_info):
+        self.row = row
+        self.col = col
+        self.ship_info = ship_info
         self.p1_name = None
         self.p1_board = None
         self.p2_name = None
         self.p2_board = None
 
     def setup(self):
-        with open("configs/minor_game.txt") as config:
-            size = config.readline()
-            self.row, self.col = size.split()
-            for line in config:
-                (key, val) = line.split()
-                self.ship_info[key] = val
 
         print('Board dimension:', self.row, 'x', self.col+'\n', self.ship_info)
 
