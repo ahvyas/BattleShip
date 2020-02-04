@@ -149,7 +149,7 @@ class Board(object):
     def get_result(self, x: int, y: int) -> Tuple[str, Any]:
         self.ship_abb = self.b[x][y]
         if self.b[x][y] == self.empty:  # Case for miss
-            print('Miss')
+            print('Miss\n')
             return self.miss, self.ship_abb
         else:  # Case for hit
             return self.hit, self.ship_abb
