@@ -68,8 +68,10 @@ class Board(object):
     #allows user to place ship
     def user_place_ship(self) -> None:
         # Acceptable orientation names
-        valid_orientation_hori = ['h', 'hori', 'horiz', 'horizontal']
-        valid_orientation_vert = ['v', 'vert', 'verti', 'vertical']
+        #valid_orientation_hori = ['h', 'hori', 'horiz', 'horizontal']
+        #valid_orientation_vert = ['v', 'vert', 'verti', 'vertical']
+        valid_orientation_hori = 'horizontal'
+        valid_orientation_vert = 'vertical'
 
         # Turn the ship orientation into a boolean value, makes it easier to code later
         #True = Vertical, False = Horizontal
