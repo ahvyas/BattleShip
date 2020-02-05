@@ -91,6 +91,7 @@ class Board(object):
                     ship_or_input = input('{} enter horizontal or vertical for the orientation of {} which is {} long: '
                                           .format(user_name, ship_name, ship_size))
                     ship_or_input = ship_or_input.strip()
+                    ship_or_input = ship_or_input.lower()
                     if len(ship_or_input) <= len(valid_orientation_hori) and \
                             valid_orientation_hori.startswith(ship_or_input):
                         ship_or_input = 'horizontal'
