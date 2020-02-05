@@ -107,7 +107,7 @@ class Board(object):
                     continue
                 #Asks the user to input coordinates
                 ship_coord_input = input('{}, enter the starting position for your {} ship ,which is {} long, '
-                                         'in the form row, column'.format(user_name, ship_name, ship_size))
+                                         'in the form row, column: '.format(user_name, ship_name, ship_size))
                 try:
                     ship_row_input, ship_col_input = ship_coord_input.split(',')
                 except ValueError:
@@ -149,7 +149,7 @@ class Board(object):
                     continue
 
                 break
-
+            print("{}'s Placement Board".format(user_name))
             self.format_board()
         return self.b
 
