@@ -37,8 +37,9 @@ class Game(object):
                 self.p1_board.format_board()
                 x, y = self.ask_move(self.p1)
 
-                if not self.check_move(x, y, self.p2_board.return_board()):
-                    continue
+                while not self.check_move(x, y, self.p2_board.return_board()):
+                    x, y = self.ask_move(self.p1)
+
 
                 hit_or_miss, ship_abb = self.p2_board.get_result(x, y)
                 if hit_or_miss == 'X':
@@ -75,7 +76,7 @@ class Game(object):
                 x, y = self.ask_move(self.p2)
 
                 if not self.check_move(x, y, self.p1_board.return_board()):
-                    continue
+                    x, y = self.ask_move(self.p2)
 
                 hit_or_miss, ship_abb = self.p1_board.get_result(x, y)
                 if hit_or_miss == 'X':
@@ -119,7 +120,7 @@ class Game(object):
             try:
                 x, y = coor.split(',')
             except ValueError:
-                print('{} is not a valid location.\nEnter the firing location in the form row, column.'.format(coor))
+                print('{} is not a valid location.\nEnter the firing location in the form row, column'.format(coor))
                 continue
             try:
                 x = int(x.rstrip())
