@@ -50,23 +50,29 @@ class Board(object):
     def coord_validate(self, board: list, ship_name: str, ship_size: int, row: int, col: int, sp: bool) -> bool:
         s_name = []
         while not sp:
+            seen = set()
             for i in range(ship_size):
                 if board[row][col+i] != self.cell.first_board_init():
-                    s_name.append(board[row][col+i])
+                    if board[row][col+i] not in seen:
+                        seen.add(board[row][col+i])
+                        s_name.append(board[row][col+i])
             if len(s_name):
                 s_name.sort()
-                print('Cannot place {} horizontally at {}, {} because it would overlap with {}.'
-                          .format(ship_name, row, col, *s_name))
+                print('Cannot place {} horizontally at {}, {} because it would overlap with {}'
+                          .format(ship_name, row, col, s_name))
                 return False
             return True
         while sp:
+            seen = set()
             for j in range(ship_size):
                 if board[row+j][col] != self.cell.first_board_init():
-                    s_name.append(board[row+j][col])
+                    if board[row+j][col] not in seen:
+                        seen.add(board[row+j][col])
+                        s_name.append(board[row+j][col])
                 if len(s_name):
                     s_name.sort()
-                    print('Cannot place {} vertically at {}, {} because it would overlap with {}.'
-                          .format(ship_name, row, col, *s_name))
+                    print('Cannot place {} vertically at {}, {} because it would overlap with {}'
+                          .format(ship_name, row, col, s_name))
                     return False
 
             return True
@@ -95,7 +101,7 @@ class Board(object):
                 try:
                     ship_or_input = input('{} enter horizontal or vertical for the orientation of {} which is {} long: '
                                           .format(user_name, ship_name, ship_size))
-                    ship_or_input.strip()
+                    ship_or_input = ship_or_input.strip()
                     if ship_or_input.lower() in valid_orientation_hori:
                         ship_or_input = 'horizontal'
                     elif ship_or_input.lower() in valid_orientation_vert:
@@ -116,21 +122,21 @@ class Board(object):
                 try:
                     ship_row_input = int(ship_row_input)
                 except ValueError:
-                    print('row: {} is not a valid value for row.\nIt should be an integer between 0 '
+                    print('{} is not a valid value for row.\nIt should be an integer between 0 '
                           'and {}'.format(ship_row_input, self.num_rows - 1))
                     continue
                 try:
                     ship_col_input = int(ship_col_input)
                 except ValueError:
-                    print('Column: {} is not a valid value for column.\n It should be an integer between 0 '
+                    print('{} is not a valid value for column.\n It should be an integer between 0 '
                           'and {}'.format(ship_col_input, self.num_cols - 1))
                     continue
                 try:
                     if ship_col_input not in range(self.num_cols) or ship_row_input not in range(self.num_rows):
                         raise ValueError
                 except ValueError:
-                    print('Cannot place {} {}ly at {} because it would be out of bounds.'.
-                          format(ship_name, ship_or_input, ship_coord_input))
+                    print('Cannot place {} {}ly at {}, {} because it would be out of bounds.'.
+                          format(ship_name, ship_or_input, ship_row_input, ship_col_input))
                     continue
 
                 # call the ship_orientation bool object
