@@ -17,14 +17,12 @@ class Board(object):
         self.ship_abb = None
         self.cell = Cell(self.num_rows, self.num_cols)
 
-    def initialize_board(self) -> List:
+    def initialize_board(self) -> None:
         # creates 2D matrix for our game
         self.b = [[self.cell.first_board_init() for i in range(self.num_cols)] for j in range(self.num_rows)]
 
         #Initial Board UI
         self.format_board()
-
-        # returns the board for internal manipulation
 
     def return_board(self) -> List:
         return self.b
@@ -80,10 +78,10 @@ class Board(object):
     #allows user to place ship
     def user_place_ship(self, user_name: str) -> None:
         # Acceptable orientation names
-        #valid_orientation_hori = self.gen_valid_or('horizontal')
-        #valid_orientation_vert = self.gen_valid_or('vertical')
-        valid_orientation_hori = 'horizontal'
-        valid_orientation_vert = 'vertical'
+        valid_orientation_hori = self.gen_valid_or('horizontal')
+        valid_orientation_vert = self.gen_valid_or('vertical')
+        #valid_orientation_hori = 'horizontal'
+        #valid_orientation_vert = 'vertical'
 
         # Turn the ship orientation into a boolean value, makes it easier to code later
         #True = Vertical, False = Horizontal
