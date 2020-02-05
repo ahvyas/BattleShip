@@ -37,13 +37,6 @@ class Board(object):
             print(index, end=' ')
             print(*num_row, end='\n')
 
-    def gen_valid_or(self, word: str) -> list:
-        text = word[0::]
-        l = [word[0]]
-        for i in range(1, len(word) + 1):
-            l.append(text[:i])
-        return l
-
     #validates coordinates given by the user
     def coord_validate(self, board: list, ship_name: str, ship_size: int, row: int, col: int, sp: bool) -> bool:
         s_name = []
@@ -78,10 +71,8 @@ class Board(object):
     #allows user to place ship
     def user_place_ship(self, user_name: str) -> None:
         # Acceptable orientation names
-        valid_orientation_hori = self.gen_valid_or('horizontal')
-        valid_orientation_vert = self.gen_valid_or('vertical')
-        #valid_orientation_hori = 'horizontal'
-        #valid_orientation_vert = 'vertical'
+        valid_orientation_hori = 'horizontal'
+        valid_orientation_vert = 'vertical'
 
         # Turn the ship orientation into a boolean value, makes it easier to code later
         #True = Vertical, False = Horizontal
@@ -100,9 +91,11 @@ class Board(object):
                     ship_or_input = input('{} enter horizontal or vertical for the orientation of {} which is {} long: '
                                           .format(user_name, ship_name, ship_size))
                     ship_or_input = ship_or_input.strip()
-                    if ship_or_input.lower() in valid_orientation_hori:
+                    if len(ship_or_input) <= len(valid_orientation_hori) and \
+                            valid_orientation_hori.startswith(ship_or_input):
                         ship_or_input = 'horizontal'
-                    elif ship_or_input.lower() in valid_orientation_vert:
+                    elif len(ship_or_input) <= len(valid_orientation_vert) and \
+                            valid_orientation_vert.startswith(ship_or_input):
                         ship_or_input = 'vertical'
                     else:
                         raise ValueError
